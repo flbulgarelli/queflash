@@ -496,6 +496,6 @@ function generateCards(verbs: any[], category: string) {
   ]).map(it => ({ ...it, category: category }))
 }
 
-const cards =  generateCards(presente, 'Presente').concat(generateCards(pasado, 'Pretérito Perfeito'))
+const cards =  generateCards(presente, 'Presente').concat(generateCards(pasado, 'Pretérito Perfeito')).map((it, index) => ({...it, id: index}));
 
 export { cards };
