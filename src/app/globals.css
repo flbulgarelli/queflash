@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  padding: 5vh calc(50vw - 21ch);
+}
+
+.fls-card {
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+  padding: 20px;
+  max-width: 42ch;
+}
+
+.fls-item {
+  font-size: 1.5rem;
+}
+
+.fls-target {
+  margin: 10px 0 15px;
+}
+
+.fls-actions {
+  text-align: center;
+}
+
+.fls-actions button {
+  margin: 0 5px;
 }
