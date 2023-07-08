@@ -1,10 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 body {
-  padding: 5vh calc(50vw - 21ch);
+  padding: 10vh 10vw;
 }
+
+.fls-decks-area {
+  padding: 5vh calc(50% - 21ch);
+}
+
 
 .fls-card {
   display: grid;
@@ -67,4 +69,9 @@ body {
 
 .fls-hard {
   color: #d32f2f;
+}
+
+.MuiTextField-root {
+  margin: 4px;
+  size: 25ch;
 }
