@@ -1,20 +1,19 @@
+'use client'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import * as Storage from './storage';
 import DeckData from './deck-data';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 
 export default function DeckList() {
-  const decks: DeckData[] = [];
+  const [decks, setDecks] = useState<DeckData[]>([]);
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key?.startsWith('deck-')) {
-      // @ts-ignore
-      decks.push(Storage.getDeck(key));
-    }
-  }
+  useEffect(() => {
+    setDecks(Storage.getDecks());
+  }, []);
 
   return (
     <>
@@ -37,7 +36,9 @@ export default function DeckList() {
                   <TableCell component="th" scope="row">
                     <Link href={`/deck/${Storage.asDeckKey(deck.name)}`}>{deck.name}</Link>
                   </TableCell>
-                  <TableCell align="right">{deck.cards.length}</TableCell>
+                  <TableCell align="right">
+                    {deck.cards.length}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
