@@ -1,5 +1,5 @@
 'use client'
-import CardData from "./card-data";
+import CardData, { getCardIds, getCardsById } from "./card-data";
 import DeckData from "./deck-data";
 
 export function asDeckKey(name: string) {
@@ -9,12 +9,20 @@ export function asDeckKey(name: string) {
 export function getDeck(deckKey: string) {
   const item = localStorage.getItem(deckKey);
   if (item) {
-    return JSON.parse(item) as DeckData;
+    const jsonDeck = JSON.parse(item);
+    jsonDeck.easies = getCardsById(jsonDeck.cards, jsonDeck.easies ?? []);
+    jsonDeck.hards = getCardsById(jsonDeck.cards, jsonDeck.hards ?? []);
+    return jsonDeck as DeckData;
   }
 }
 
 export function setDeck(deckKey: string, deck: DeckData) {
-  localStorage.setItem(deckKey, JSON.stringify(deck));
+  localStorage.setItem(deckKey, JSON.stringify({
+    name: deck.name,
+    cards: deck.cards,
+    easies: getCardIds(deck.easies),
+    hards: getCardIds(deck.hards)
+  }));
 }
 
 export function getDecks() {
@@ -27,4 +35,11 @@ export function getDecks() {
     }
   }
   return decks;
+}
+
+export function updateDeckDifficulties(deckKey: string, easies: CardData[], hards: CardData[]) {
+  const deck = getDeck(deckKey)!;
+  deck.easies = easies;
+  deck.hards = hards;
+  setDeck(deckKey, deck);
 }

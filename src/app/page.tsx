@@ -1,11 +1,13 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { TextField, Button, Breadcrumbs, Typography, StyledEngineProvider, Box } from '@mui/material';
+import { TextField, Button, Breadcrumbs, Typography, StyledEngineProvider, Box, FormGroup, FormControlLabel, Switch, List, ListItem } from '@mui/material';
 import DeckList from './deck-list';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import * as Storage from './storage'
 import CardData from './card-data';
+import { AddCircle } from '@mui/icons-material';
+import { importSource } from './import-source';
 
 export default function Page() {
   return (
@@ -21,76 +23,45 @@ export default function Page() {
       <main className='fls-home-page'>
         <DeckLoader />
         <DeckList />
+        <SampleDecks />
       </main>
     </>
   )
 }
 
-async function fetchSource(url: string)  : Promise<CardData[]> {
-  const response = await fetch(url);
-  const contentType = response.headers.get("content-type");
-
-  if (contentType?.includes("application/json") || url.endsWith(".json")) {
-    return await response.json();
-  } else if (contentType?.includes("text/csv") || url.endsWith(".csv")) {
-    const text = await response.text();
-    const lines = text.split('\n');
-    const columnsCount = lines[0].split(",").length;
-
-    if (columnsCount === 2) {
-      return lines.slice(1).map((it, index) => {
-        const [question, answer] = it.split(",");
-        return {
-          id: index,
-          category: '',
-          item: '',
-          question,
-          answer
-        };
-      })
-    } else if (columnsCount === 3) {
-      return lines.slice(1).map((it, index) => {
-        const [category, question, answer] = it.split(",");
-        return {
-          id: index,
-          category,
-          item: '',
-          question,
-          answer
-        };
-      })
-    } else {
-      throw new Error("Unsupported CSV deck");
-    }
-  } else {
-    throw new Error("Unsupported deck format " + contentType);
-  }
+function SampleDecks() {
+  const samples = [
+    {name: 'Verbos Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/verbos.pt.json', inverted: false},
+    {name: 'Vocabulario Español-Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.csv', inverted: false},
+    {name: 'Vocabulario Portugues-Español', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.csv', inverted: true},
+  ]
+  return (
+    <>
+    <h2>Sample decks</h2>
+    <List>
+      {samples.map((it, index) => <ListItem key={index}><Link href={`/import?name=${it.name}&inverted=${it.inverted}&url=${it.url}` }>{it.name}</Link></ListItem>)}
+    </List>
+    </>
+  )
 }
+
 
 function DeckLoader() {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
-
+  const [invert, setInvert] = useState(false);
   const router = useRouter();
 
-  const deckKey = Storage.asDeckKey(name);
-
-  function importSource() {
-    fetchSource(url)
-      .then(it => {
-        Storage.setDeck(deckKey, {name, cards: it})
-        router.push(`/deck/${deckKey}`);
-      });
+  function importAndRedirect() {
+    importSource(name, url, invert).then(it => router.push(it));
   }
 
   return (
-    <Box component='form'>
-      <h2>Load new deck</h2>
-
+    <FormGroup>
+      <h2>Import new deck</h2>
       <TextField
-        size='small'
         fullWidth
-        margin='dense'
+        placeholder='My deck'
         id="deck-name"
         label="Name"
         variant="outlined"
@@ -98,17 +69,17 @@ function DeckLoader() {
         value={name}
         onChange={(e) => setName(e.target.value)} />
       <TextField
-        size='small'
         fullWidth
-        margin='dense'
+        placeholder='http://mydeck.com/adeck.json'
         id="deck-url"
         label="URL"
         variant="outlined"
         required
         value={url}
         onChange={(e) => setUrl(e.target.value)} />
+      <FormControlLabel control={<Switch onChange={(e) => setInvert(e.target.checked)} />} label="Invert cards sides" />
 
-      <Button size='medium' variant='outlined' onClick={importSource}>Go</Button>
-    </Box>
+      <Button startIcon={<AddCircle />} disabled={!name || !url}  variant='outlined' onClick={importAndRedirect}>Import</Button>
+    </FormGroup>
   )
 }

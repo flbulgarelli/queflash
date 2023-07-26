@@ -3,8 +3,8 @@ body {
   padding: 10vh 10vw;
 }
 
-.fls-decks-area {
-  padding: 5vh calc(50% - 21ch);
+main {
+  padding: 1vh calc(50% - 21ch);
 }
 
 

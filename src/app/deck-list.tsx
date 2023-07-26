@@ -4,9 +4,6 @@ import * as Storage from './storage';
 import DeckData from './deck-data';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
-
 
 export default function DeckList() {
   const [decks, setDecks] = useState<DeckData[]>([]);
@@ -20,11 +17,11 @@ export default function DeckList() {
       <h2>My decks</h2>
       {decks.length === 0 ? 'No decks' :
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Deck</TableCell>
-                <TableCell align="right">Cards</TableCell>
+                <TableCell align="right">Total cards</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -37,7 +34,7 @@ export default function DeckList() {
                     <Link href={`/deck/${Storage.asDeckKey(deck.name)}`}>{deck.name}</Link>
                   </TableCell>
                   <TableCell align="right">
-                    {deck.cards.length}
+                    {deck.cards.length} / <span className="fls-easy">{deck.easies.length}</span> / <span className="fls-hard">{deck.hards.length}</span>
                   </TableCell>
                 </TableRow>
               ))}
