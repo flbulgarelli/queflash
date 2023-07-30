@@ -1,7 +1,7 @@
 export default interface CardData {
   id: number,
   category: string,
-  item: string,
+  subcategory: string,
   question: string,
   answer: string,
 };

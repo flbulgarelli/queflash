@@ -28,7 +28,7 @@ function Card(props: CardData & {
     <article className="fls-card">
       <section className="fls-category">{props.category}</section>
       <section className="fls-id">#{props.id}</section>
-      <section className="fls-item">{props.item}</section>
+      <section className="fls-subcategory">{props.subcategory}</section>
       <section className="fls-target">{flipped ? props.answer : <Question value={props.question} />}</section>
       <section className="fls-actions">
         {flipped ? <>
@@ -77,7 +77,7 @@ function Deck(props: DeckData) {
           key={currentCard.id}
           id={currentCard.id}
           category={currentCard.category}
-          item={currentCard.item}
+          subcategory={currentCard.subcategory}
           question={currentCard.question}
           answer={currentCard.answer}
           onEasy={() => {

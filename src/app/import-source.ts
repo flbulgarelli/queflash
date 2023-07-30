@@ -19,7 +19,7 @@ async function fetchSource(url: string, invert: boolean)  {
           return {
             id: index,
             category: '',
-            item: '',
+            subcategory: '',
             question,
             answer
           };
@@ -30,7 +30,18 @@ async function fetchSource(url: string, invert: boolean)  {
           return {
             id: index,
             category,
-            item: '',
+            subcategory: '',
+            question,
+            answer
+          };
+        })
+      } else if (columnsCount === 3) {
+        return lines.slice(1).map((it, index) => {
+          const [category, subcategory, question, answer] = it.split(",");
+          return {
+            id: index,
+            category,
+            subcategory,
             question,
             answer
           };

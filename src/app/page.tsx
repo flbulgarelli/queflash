@@ -32,8 +32,10 @@ export default function Page() {
 function SampleDecks() {
   const samples = [
     {name: 'Verbos Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/verbos.pt.json', inverted: false},
-    {name: 'Vocabulario Español-Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.csv', inverted: false},
-    {name: 'Vocabulario Portugues-Español', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.csv', inverted: true},
+    {name: 'Antonimos Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/antonimos.pt.json', inverted: false},
+    {name: 'Frases Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/frases.pt.json', inverted: false},
+    {name: 'Vocabulario Español-Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.pt.csv', inverted: false},
+    {name: 'Vocabulario Portugues-Español', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.pt.csv', inverted: true},
   ]
   return (
     <>
