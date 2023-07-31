@@ -6,3 +6,7 @@ export default interface DeckData {
   easies: CardData[];
   hards: CardData[];
 }
+
+export function makeDeck(name: string, cards: CardData[] = []) {
+  return { name, cards, hards: [], easies: [] };
+}

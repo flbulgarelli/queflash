@@ -1,4 +1,5 @@
 import CardData from "./card-data";
+import { makeDeck } from "./deck-data";
 import * as Storage from "./storage";
 
 async function fetchSource(url: string, invert: boolean)  {
@@ -55,6 +56,6 @@ async function fetchSource(url: string, invert: boolean)  {
 export async function importSource(name: string, url: string, invert: boolean) {
   const deckKey = Storage.asDeckKey(name);
   const cards = await fetchSource(url, invert);
-  Storage.setDeck(deckKey, { name, cards, hards: [], easies: [] });
+  Storage.setDeck(deckKey, makeDeck(name));
   return `/deck/${deckKey}`;
 }

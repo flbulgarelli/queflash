@@ -151,9 +151,14 @@ function DeckNavigator(props: DeckData) {
 }
 
 export default function Page(props: { params: { key: string } }) {
-  const deck = Storage.getDeck(props.params.key)!;
+  const [deck, setDeck] = useState<DeckData>();
 
-  return (
+  useEffect(() => {
+    setDeck(Storage.getDeck(props.params.key));
+  }, []);
+
+
+  return deck ? (
     <>
       <nav>
         <Breadcrumbs aria-label="breadcrumb">
@@ -167,6 +172,22 @@ export default function Page(props: { params: { key: string } }) {
       </nav>
       <main>
         <DeckNavigator {...deck}></DeckNavigator>
+      </main>
+    </>
+  ) : (
+    <>
+      <nav>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/">
+            QueFlash
+          </Link>
+          <Typography color="text.primary">Deck</Typography>
+          <Typography color="text.primary">Unknown</Typography>
+
+        </Breadcrumbs>
+      </nav>
+      <main>
+        Unknown deck
       </main>
     </>
   )
