@@ -9,3 +9,5 @@ yarn dev
 # or
 pnpm dev
 ```
+
+Then go to http://localhost:3000/queflash and start using your cards!

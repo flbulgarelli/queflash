@@ -42,7 +42,7 @@ function SampleDecks() {
       <List>
         {samples.map((it, index) =>
           <ListItem key={index}>
-            <Button href={`./import?name=${it.name}&inverted=${it.inverted}&url=${it.url}`} startIcon={<AddCircle/>}>{it.name}</Button>
+            <Button href={`/import?name=${it.name}&inverted=${it.inverted}&url=${it.url}`} startIcon={<AddCircle/>}>{it.name}</Button>
           </ListItem>)
         }
       </List>

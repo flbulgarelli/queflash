@@ -31,7 +31,7 @@ export default function DeckList() {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    <Link href={`./deck/${Storage.asDeckKey(deck.name)}`}>{deck.name}</Link>
+                    <Link href={`/deck/${Storage.asDeckKey(deck.name)}`}>{deck.name}</Link>
                   </TableCell>
                   <TableCell align="right">
                     {deck.cards.length} / <span className="fls-easy">{deck.easies.length}</span> / <span className="fls-hard">{deck.hards.length}</span>
