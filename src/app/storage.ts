@@ -3,7 +3,7 @@ import CardData, { getCardIds, getCardsById } from "./card-data";
 import DeckData from "./deck-data";
 
 export function asDeckKey(name: string) {
-  return `deck-${name.toLowerCase().trim().replace(" ", "-")}`;
+  return `deck-${encodeURIComponent(name.toLowerCase().trim().replace(" ", "-"))}`;
 }
 
 export function getDeck(deckKey: string) {

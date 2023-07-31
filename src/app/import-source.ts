@@ -12,43 +12,28 @@ async function fetchSource(url: string, invert: boolean)  {
       const text = await response.text();
       const lines = text.split('\n');
       const columnsCount = lines[0].split(",").length;
+      let parseLine: (line: string, id: number) => CardData;
 
       if (columnsCount === 2) {
-        return lines.slice(1).map((it, index) => {
+        parseLine = (it, id) => {
           const [question, answer] = it.split(",");
-          return {
-            id: index,
-            category: '',
-            subcategory: '',
-            question,
-            answer
-          };
-        })
+          return { id, category: '', subcategory: '', question, answer };
+        }
       } else if (columnsCount === 3) {
-        return lines.slice(1).map((it, index) => {
+        parseLine = (it, id) => {
           const [category, question, answer] = it.split(",");
-          return {
-            id: index,
-            category,
-            subcategory: '',
-            question,
-            answer
-          };
-        })
-      } else if (columnsCount === 3) {
-        return lines.slice(1).map((it, index) => {
+          return { id, category, subcategory: '', question, answer };
+        }
+      } else if (columnsCount === 4) {
+        parseLine = (it, id) => {
           const [category, subcategory, question, answer] = it.split(",");
-          return {
-            id: index,
-            category,
-            subcategory,
-            question,
-            answer
-          };
-        })
+          return { id, category, subcategory, question, answer };
+        }
       } else {
         throw new Error("Unsupported CSV deck");
       }
+
+      return lines.slice(1).map((it, index) => parseLine(it, index));
     } else {
       throw new Error("Unsupported deck format " + contentType);
     }

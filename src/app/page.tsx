@@ -4,7 +4,6 @@ import { TextField, Button, Breadcrumbs, Typography, StyledEngineProvider, Box, 
 import DeckList from './deck-list';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import * as Storage from './storage'
 import CardData from './card-data';
 import { AddCircle } from '@mui/icons-material';
 import { importSource } from './import-source';
@@ -31,22 +30,25 @@ export default function Page() {
 
 function SampleDecks() {
   const samples = [
-    {name: 'Verbos Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/verbos.pt.json', inverted: false},
-    {name: 'Antonimos Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/antonimos.pt.json', inverted: false},
-    {name: 'Frases Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/34a6485b4b4ced8cec93e77070b481c3fd9863c4/frases.pt.json', inverted: false},
-    {name: 'Vocabulario Español-Portugues', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.pt.csv', inverted: false},
-    {name: 'Vocabulario Portugues-Español', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/585046f936b04c9ca0fb9b8272b05651b287c059/vocabulario.pt.csv', inverted: true},
+    { name: 'Verbos Português', url: 'https://gist.githubusercontent.com/flbulgarelli/15aaf9059f87a1bd5b1a14a5e084710a/raw/3658ae64c06d74799839e46bcec03be72e6a708a/verbos.pt.json', inverted: false },
+    { name: 'Antônimos Português', url: 'https://gist.githubusercontent.com/flbulgarelli/548cb7371883393570b258cdac4c6e63/raw/90320a173158fc4bc7090073d3db520725ed7602/antonimos.pt.csv', inverted: false },
+    { name: 'Frases Português', url: 'https://gist.githubusercontent.com/flbulgarelli/64a5cf9a5a0ca7e1cdfe6b7bcc790da2/raw/f0400e879299e9c1aa88fd68e276f90f0fca201d/frases.pt.csv', inverted: false },
+    { name: 'Vocabulário Español-Português', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/2a1d22509d87b27f1ad9f0cbf3b78bbcaf7f4468/vocabulario.pt.csv', inverted: false },
+    { name: 'Vocabulário Português-Español', url: 'https://gist.githubusercontent.com/flbulgarelli/cbf6dce967de061b23892cbd2ec18022/raw/2a1d22509d87b27f1ad9f0cbf3b78bbcaf7f4468/vocabulario.pt.csv', inverted: true },
   ]
   return (
     <>
-    <h2>Sample decks</h2>
-    <List>
-      {samples.map((it, index) => <ListItem key={index}><Link href={`/import?name=${it.name}&inverted=${it.inverted}&url=${it.url}` }>{it.name}</Link></ListItem>)}
-    </List>
+      <h2>Sample decks</h2>
+      <List>
+        {samples.map((it, index) =>
+          <ListItem key={index}>
+            <Button href={`/import?name=${it.name}&inverted=${it.inverted}&url=${it.url}`} startIcon={<AddCircle/>}>{it.name}</Button>
+          </ListItem>)
+        }
+      </List>
     </>
   )
 }
-
 
 function DeckLoader() {
   const [name, setName] = useState("");
@@ -81,7 +83,7 @@ function DeckLoader() {
         onChange={(e) => setUrl(e.target.value)} />
       <FormControlLabel control={<Switch onChange={(e) => setInvert(e.target.checked)} />} label="Invert cards sides" />
 
-      <Button startIcon={<AddCircle />} disabled={!name || !url}  variant='outlined' onClick={importAndRedirect}>Import</Button>
+      <Button startIcon={<AddCircle />} disabled={!name || !url} variant='outlined' onClick={importAndRedirect}>Import</Button>
     </FormGroup>
   )
 }
