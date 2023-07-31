@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useEffect, useState } from "react"
 import Button from "@mui/material/Button";
 import { Breadcrumbs, Checkbox, FormControlLabel, FormGroup, Input, Switch, TextField, Typography } from "@mui/material";
