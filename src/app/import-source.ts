@@ -56,6 +56,6 @@ async function fetchSource(url: string, invert: boolean)  {
 export async function importSource(name: string, url: string, invert: boolean) {
   const deckKey = Storage.asDeckKey(name);
   const cards = await fetchSource(url, invert);
-  Storage.setDeck(deckKey, makeDeck(name));
+  Storage.setDeck(deckKey, makeDeck(name, cards));
   return `/deck/${deckKey}`;
 }
